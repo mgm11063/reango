@@ -5,5 +5,5 @@ app_name = "rooms"
 
 urlpatterns = [
     path("list/", views.list_rooms),
-    path('', views.HomeTemplateView.as_view(), name='home')
+    path('fuck', views.HomeTemplateView.as_view(), name='home')
     ]

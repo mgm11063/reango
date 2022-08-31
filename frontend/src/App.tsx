@@ -1,28 +1,18 @@
-import { useQuery } from "react-query";
-import styled from "styled-components";
-import { getRooms, IRoom } from "./api";
-
-const Intro = styled.div`
-  font-size: 1em;
-`;
-
-const Box = styled.div``;
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { render } from "react-dom";
+import Room from "./Routes/Room";
 
 function App() {
-  const { data, isLoading } = useQuery<IRoom[]>(
-    ["rooms", "showRoom"],
-    getRooms
-  );
-
-  console.log(data, isLoading);
-
   return (
-    <Intro>
-      {data?.map((room) => (
-        <Box>{room.address}</Box>
-      ))}
-    </Intro>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Room />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
+const appDiv = document.getElementById("app");
+render(<App />, appDiv);
