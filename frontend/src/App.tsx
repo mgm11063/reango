@@ -1,18 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { render } from "react-dom";
+import Rooms from "./Routes/Rooms";
 import Room from "./Routes/Room";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Room />}></Route>
+        <Route path="rooms/" element={<Rooms />}></Route>
+        <Route path="rooms/:id/" element={<Room />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
-const appDiv = document.getElementById("app");
-render(<App />, appDiv);

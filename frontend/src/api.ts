@@ -1,6 +1,6 @@
 const BASE_PATH = "http://127.0.0.1:8000";
-
 export interface IRoom {
+  id: Number;
   name: String;
   address: String;
   price: String;
@@ -14,8 +14,12 @@ export interface IRoom {
   instant_book: Boolean;
 }
 
-export function getRooms() {
-  return fetch(`${BASE_PATH}/api/v1/rooms/list/`).then((response) =>
+export function getRoomList() {
+  return fetch(`${BASE_PATH}/rooms/`).then((response) => response.json());
+}
+
+export function getRoom(roomId: String) {
+  return fetch(`${BASE_PATH}/rooms/${roomId}/`).then((response) =>
     response.json()
   );
 }
