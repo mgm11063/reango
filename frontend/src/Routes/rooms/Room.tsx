@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getRoom, IRoom } from "../api";
+import { getRoom, IRoom } from "../../api";
 
 const Title = styled.h4`
   font-size: 2em;

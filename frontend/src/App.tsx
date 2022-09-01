@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Rooms from "./Routes/Rooms";
-import Room from "./Routes/Room";
+import Rooms from "./Routes/rooms/Rooms";
+import Room from "./Routes/rooms/Room";
 
 function App() {
   return (

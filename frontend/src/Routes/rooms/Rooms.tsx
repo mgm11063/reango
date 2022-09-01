@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getRoomList, IRoom } from "../api";
+import { getRoomList, IRoom } from "../../api";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
