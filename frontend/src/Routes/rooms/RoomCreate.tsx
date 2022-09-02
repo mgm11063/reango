@@ -1,27 +1,50 @@
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { createRoom } from "../../api/api";
 
-function RoomCreate({ id }) {
-  const { data } = useQuery(["person", id], () => fetchPerson(id));
+const RoomForm = styled.form``;
+
+function RoomCreate() {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
-  const { mutate } = useMutation((values) => updatePerson(values));
+  const { mutate } = useMutation(createRoom, {
+    onSuccess: (data) => {
+      console.log(data);
+      navigate("/rooms");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
-  if (data) {
-    return (
-      <form onSubmit={handleSubmit(mutate)}>
-        <div>
-          <label htmlFor="firstName">First Name</label>
-          <input {...register("firstName")} defaultValue={data.firstName} />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name</label>
-          <input {...register("lastName")} defaultValue={data.lastName} />
-        </div>
-        <input type="submit" />
-      </form>
-    );
-  }
+  const onSubmit = (data: any) => {
+    const formData = {
+      ...data,
+    };
+    console.log(formData);
+    mutate(formData);
+  };
 
-  return "loading...";
+  return (
+    // {...register("name"),{type:"text"}} 타입같은거 넣는 순간 onSubmit 데이터에서 undefined 로 나옴;
+    <div>
+      <RoomForm onSubmit={handleSubmit(onSubmit)}>
+        <input {...register("name")} />
+        <input {...register("address")} />
+        <input {...register("price")} />
+        <input {...register("beds")} />
+        <input {...register("lat")} />
+        <input {...register("lng")} />
+        <input {...register("bedrooms")} />
+        <input {...register("bathrooms")} />
+        <input {...register("check_in")} />
+        <input {...register("check_out")} />
+        <input type="checkbox" {...register("instant_book")} />
+        <button>Add</button>
+      </RoomForm>
+    </div>
+  );
 }
 export default RoomCreate;

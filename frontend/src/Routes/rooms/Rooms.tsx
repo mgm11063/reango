@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
-import { getRoomList, IRoom } from "../../api";
+import { IRoom } from "../../api/types";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { getRoomList } from "../../api/api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -35,6 +36,7 @@ const Room = styled.li`
 
 function Rooms() {
   const { data } = useQuery<IRoom[]>("rooms", getRoomList);
+
   return (
     <Container>
       <Header>
@@ -49,9 +51,10 @@ function Rooms() {
                 name: room.name,
                 address: room.address,
                 price: room.price,
+                check_in: room.check_in,
               }}
             >
-              {room.name} &rarr;
+              {room.name}
             </Link>
           </Room>
         ))}

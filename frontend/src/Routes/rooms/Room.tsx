@@ -1,7 +1,8 @@
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getRoom, IRoom } from "../../api";
+import { getRoom } from "../../api/api";
+import { IRoom } from "../../api/types";
 
 const Title = styled.h4`
   font-size: 2em;
@@ -41,6 +42,7 @@ function Room() {
           <Overview>
             <span>{state?.address}</span>
             <span>{state?.price}</span>
+            <span>{data?.check_in}</span>
           </Overview>
         </>
       ) : isLoading ? (
@@ -50,7 +52,8 @@ function Room() {
           <Title>{data?.name} from react-query</Title>
           <Overview>
             <span>{data?.address}</span>
-            <span>{data?.price}</span>
+            <span>{!data?.price}</span>
+            <span>{data?.check_in}</span>
           </Overview>
         </>
       )}
