@@ -1,17 +1,17 @@
 from rest_framework import serializers
-from .models import Room, Photo
+from .models import Room, RoomTag
 
 
-class PhotoSerializer(serializers.ModelSerializer):
+class RoomTagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Photo
-        exclude = ("room",)
+        model = RoomTag
+        fields = ("tag",)
 
 
 class RoomSerializer(serializers.ModelSerializer):
 
     is_fav = serializers.SerializerMethodField()
-    photos = PhotoSerializer(read_only=True, many=True)
+    room_tag = RoomTagSerializer(many=True,)
 
     class Meta:
         model = Room
@@ -38,5 +38,12 @@ class RoomSerializer(serializers.ModelSerializer):
         return False
 
     def create(self, validated_data):
+
+        room_tag_data = validated_data.pop('room_tag')
         room = Room.objects.create(**validated_data)
+        for tag in room_tag_data:
+            RoomTag.objects.create(**tag)
+            Room.objects.get(pk=room.pk)
         return room
+
+    # 46번 진행중!  지금 작성한 룸 있잖아 room.pk로 저거 가지고오고 동시에 메니투 메니 셀렉트 해서 부리기

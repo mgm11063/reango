@@ -2,6 +2,14 @@ from django.db import models
 from core.models import CoreModel
 
 
+class RoomTag(CoreModel):
+
+    tag = models.CharField(max_length=140)
+
+    def __str__(self):
+        return self.tag
+
+
 class Room(CoreModel):
 
     name = models.CharField(max_length=140)
@@ -15,23 +23,7 @@ class Room(CoreModel):
     check_in = models.TimeField(default="00:00:00")
     check_out = models.TimeField(default="00:00:00")
     instant_book = models.BooleanField(default=False)
+    room_tag = models.ManyToManyField("RoomTag", related_name="room_tag", null=True, )
 
     def __str__(self):
         return self.name
-
-    def photo_number(self):
-        return self.photos.count()
-
-    photo_number.short_description = "Photo Count"
-
-
-class Photo(CoreModel):
-
-    file = models.ImageField()
-    room = models.ForeignKey(
-        "rooms.Room", related_name="photos", on_delete=models.CASCADE
-    )
-    caption = models.CharField(max_length=140)
-
-    def __str__(self):
-        return self.room.name

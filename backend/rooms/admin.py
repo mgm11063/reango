@@ -7,10 +7,9 @@ class RoomAdmin(admin.ModelAdmin):
 
     list_display = (
         "name",
-        "photo_number",
     )
 
 
-@admin.register(models.Photo)
-class PhotoAdmin(admin.ModelAdmin):
+@admin.register(models.RoomTag)
+class RoomTagAdmin(admin.ModelAdmin):
     pass
