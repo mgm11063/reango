@@ -4,10 +4,10 @@ from core.models import CoreModel
 
 class RoomTag(CoreModel):
 
-    tag = models.CharField(max_length=140)
+    name = models.CharField(max_length=140)
 
     def __str__(self):
-        return self.tag
+        return self.name
 
 
 class Room(CoreModel):
@@ -20,8 +20,6 @@ class Room(CoreModel):
     lng = models.DecimalField(max_digits=10, decimal_places=6)
     bedrooms = models.IntegerField(default=1)
     bathrooms = models.IntegerField(default=1)
-    check_in = models.TimeField(default="00:00:00")
-    check_out = models.TimeField(default="00:00:00")
     instant_book = models.BooleanField(default=False)
     room_tag = models.ManyToManyField("RoomTag", related_name="room_tag", null=True, )
 

@@ -24,6 +24,9 @@ export interface IRoomForm {
   check_in: string;
   check_out: string;
   instant_book: boolean;
+  room_tag?: {
+    name: string;
+  };
 }
 
 export interface IRoomTag {
