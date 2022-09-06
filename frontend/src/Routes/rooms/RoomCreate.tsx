@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { WithContext as ReactTags } from "react-tag-input";
+import { Tag, WithContext as ReactTags } from "react-tag-input";
 import { RoomTag } from "./RoomTag";
 import styled from "styled-components";
 import { createRoom } from "../../api/api";
@@ -54,18 +54,20 @@ function RoomCreate() {
     setTags(tags.filter((_, index: number) => index !== i));
   };
 
-  const handleAddition = (tag: any) => {
+  const handleAddition = (tag: Tag) => {
     setTags([...tags, tag]);
   };
 
-  const handleDrag = (tag: any, currPos: any, newPos: any) => {
+  const handleDrag = (tag: Tag, currPos: number, newPos: number) => {
     const newTags = tags.slice();
-
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
-
     // re-render
     setTags(newTags);
+  };
+
+  const handleInputChange = (data: string) => {
+    console.log(data);
   };
 
   return (
@@ -113,6 +115,7 @@ function RoomCreate() {
           handleDelete={handleDelete}
           handleAddition={handleAddition}
           handleDrag={handleDrag}
+          handleInputChange={handleInputChange}
           inputFieldPosition="top"
           autocomplete
         />

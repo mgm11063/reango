@@ -10,6 +10,10 @@ class RoomTag(CoreModel):
         return self.name
 
 
+# class SubRoom(CoreModel):
+#     pass
+
+
 class Room(CoreModel):
 
     name = models.CharField(max_length=140)
