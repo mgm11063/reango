@@ -3,8 +3,8 @@ from . import views
 
 app_name = "rooms"
 router = DefaultRouter()
-router.register("", views.RoomViewSet)
 router.register("tags", views.RoomTagViewSet)
+router.register("", views.RoomViewSet)
 
 
 urlpatterns = router.urls

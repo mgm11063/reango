@@ -2,13 +2,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework import permissions
 from .models import Room, RoomTag
-from .serializers import RoomSerializer
+from .serializers import RoomSerializer, RoomTagSerializer
 
 
 # SAVE AT HOME 🏃
-@action(detail=False)
 class RoomTagViewSet(ModelViewSet):
     queryset = RoomTag.objects.all()
+    serializer_class = RoomTagSerializer
 
 
 class RoomViewSet(ModelViewSet):
@@ -55,4 +55,3 @@ class RoomViewSet(ModelViewSet):
         results = paginator.paginate_queryset(rooms, request)
         serializer = RoomSerializer(results, many=True)
         return paginator.get_paginated_response(serializer.data)
-

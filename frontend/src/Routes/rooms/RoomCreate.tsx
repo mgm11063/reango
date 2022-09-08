@@ -3,29 +3,22 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Tag, WithContext as ReactTags } from "react-tag-input";
-import { RoomTag } from "./RoomTag";
+import { RoomTags } from "./RoomTag";
 import styled from "styled-components";
 import { createRoom } from "../../api/api";
 import { IRoomForm } from "../../api/types";
-const RoomForm = styled.form``;
 
+const RoomForm = styled.form``;
 const RoomInputItem = styled.div`
   display: flex;
 `;
 const RoomInput = styled.input``;
 const InputDescription = styled.span``;
 
-const suggestions = RoomTag.map((tag: string) => {
-  return {
-    id: tag,
-    text: tag,
-  };
-});
-
 function RoomCreate() {
-  const [tags, setTags] = useState([{ id: "default", text: "default" }]);
-  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const [tags, setTags] = useState([{ id: "default", text: "default" }]);
   const { mutate } = useMutation(createRoom, {
     onSuccess: (data: any) => {
       console.log(data);
@@ -34,6 +27,13 @@ function RoomCreate() {
     onError: (error: any) => {
       console.log(error);
     },
+  });
+
+  const suggestions = RoomTags().map((tag: any) => {
+    return {
+      id: tag,
+      text: tag,
+    };
   });
 
   const onSubmit = (data: any) => {
@@ -49,7 +49,6 @@ function RoomCreate() {
     };
     mutate(formData);
   };
-
   const handleDelete = (i: number) => {
     setTags(tags.filter((_, index: number) => index !== i));
   };
@@ -58,36 +57,28 @@ function RoomCreate() {
     setTags([...tags, tag]);
   };
 
-  const handleDrag = (tag: Tag, currPos: number, newPos: number) => {
-    const newTags = tags.slice();
-    newTags.splice(currPos, 1);
-    newTags.splice(newPos, 0, tag);
-    // re-render
-    setTags(newTags);
-  };
-
-  const handleInputChange = (data: string) => {
-    console.log(data);
-  };
-
   return (
     <div>
       <RoomForm onSubmit={handleSubmit(onSubmit)}>
         <RoomInputItem>
           <InputDescription>방 이름</InputDescription>
-          <RoomInput type="text" {...register("name")} />
+          <RoomInput type="text" placeholder="방 이름" {...register("name")} />
         </RoomInputItem>
         <RoomInputItem>
           <InputDescription>주소</InputDescription>
-          <RoomInput type="text" {...register("address")} />
+          <RoomInput type="text" placeholder="주소" {...register("address")} />
         </RoomInputItem>
         <RoomInputItem>
           <InputDescription>가격</InputDescription>
-          <RoomInput type="number" {...register("price")} />
+          <RoomInput type="number" placeholder="가격" {...register("price")} />
         </RoomInputItem>
         <RoomInputItem>
           <InputDescription>침대 개수</InputDescription>
-          <RoomInput type="number" {...register("beds")} />
+          <RoomInput
+            type="number"
+            placeholder="침대 개수"
+            {...register("beds")}
+          />
         </RoomInputItem>
         <RoomInputItem>
           <InputDescription>위도</InputDescription>
@@ -114,8 +105,6 @@ function RoomCreate() {
           suggestions={suggestions}
           handleDelete={handleDelete}
           handleAddition={handleAddition}
-          handleDrag={handleDrag}
-          handleInputChange={handleInputChange}
           inputFieldPosition="top"
           autocomplete
         />

@@ -24,3 +24,7 @@ export const createRoom = async (formData: IRoomForm) => {
   }
   return;
 };
+
+export function getRoomTag() {
+  return fetch(`${BASE_PATH}/rooms/tags`).then((response) => response.json());
+}

@@ -42,8 +42,10 @@ class RoomSerializer(serializers.ModelSerializer):
         room_tag_data = validated_data.pop('room_tag')
         room = Room.objects.create(**validated_data)
         for tag in room_tag_data:
-            arg = RoomTag.objects.create(**tag)
-            Room.objects.get(pk=room.pk).room_tag.add(arg)
+            try:
+                arg = RoomTag.objects.get(name=tag["name"])
+                Room.objects.get(pk=room.pk).room_tag.add(arg.pk)
+            except RoomTag.DoesNotExist:
+                arg = RoomTag.objects.create(**tag)
+                Room.objects.get(pk=room.pk).room_tag.add(arg)
         return room
-
-    # 46번 진행중!  지금 작성한 룸 있잖아 room.pk로 저거 가지고오고 동시에 메니투 메니 셀렉트 해서 부리기
