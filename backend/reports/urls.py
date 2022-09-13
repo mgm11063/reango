@@ -1,10 +1,9 @@
 from rest_framework.routers import DefaultRouter
 from . import views
 
-app_name = "rooms"
+app_name = "reports"
 router = DefaultRouter()
-router.register("tags", views.RoomTagViewSet)
-router.register("", views.RoomViewSet)
+router.register("", views.ReportViewSet)
 
 
 urlpatterns = router.urls

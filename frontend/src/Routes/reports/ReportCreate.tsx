@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Tag, WithContext as ReactTags } from "react-tag-input";
-import { RoomTags } from "./RoomTag";
+import { RoomTags } from "./ReportTag";
 import styled from "styled-components";
 import { createRoom } from "../../api/api";
 import { IRoomForm } from "../../api/types";
@@ -183,7 +183,6 @@ function RoomCreate() {
             </Box>
           </Overlay>
         ) : null}
-
         <ReactTags
           tags={tags}
           suggestions={suggestions}

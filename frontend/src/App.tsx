@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Rooms from "./Routes/rooms/Rooms";
-import Room from "./Routes/rooms/Room";
-import RoomCreate from "./Routes/rooms/RoomCreate";
+import Rooms from "./Routes/reports/Reports";
+import Room from "./Routes/reports/Report";
+import RoomCreate from "./Routes/reports/ReportCreate";
 
 function App() {
   return (
