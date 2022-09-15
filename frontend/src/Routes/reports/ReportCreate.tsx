@@ -1,161 +1,80 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Tag, WithContext as ReactTags } from "react-tag-input";
-import { RoomTags } from "./ReportTag";
-import styled from "styled-components";
 import { createRoom } from "../../api/api";
-import { IRoomForm } from "../../api/types";
-import { motion } from "framer-motion";
-
-const RoomForm = styled.form``;
-const RoomInputItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const RoomInput = styled.input`
-  width: 200px;
-  height: 25px;
-  border: 1px solid #ddd;
-  padding: 5px 20px;
-  outline: none !important;
-`;
-const RoomSubtitle = styled.h5`
-  font-size: 15px;
-  letter-spacing: -0.3px;
-`;
-
-const Box = styled(motion.div)`
-  background-color: rgb(254, 254, 254);
-  border-radius: 30px;
-  height: 50px;
-  width: 50px;
-  position: relative;
-  padding: 25px 30px;
-  border: 1px solid #ddd;
-`;
-const Overlay = styled(motion.div)`
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  position: absolute;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  div div:first-child {
-    margin-top: 0;
-  }
-  div div {
-    margin-top: 35px;
-  }
-  div div input {
-    margin-left: 30px;
-  }
-`;
-
-const CloseBtn = styled.p`
-  display: inline-block;
-  margin: 0 auto;
-  padding: 20px 40px;
-  background-color: rgb(241 245 249);
-  text-align: center;
-  cursor: pointer;
-  border-radius: 10px;
-  &:hover {
-    color: white;
-    background-color: rgb(16 185 129);
-  }
-`;
-
-const overlay = {
-  hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
-  visible: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
-  exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
-};
+import { IReportForm } from "../../api/types";
+import {
+  Box,
+  overlay,
+  Overlay,
+  RaterOption,
+  RaterWrap,
+  RoomForm,
+  RoomInput,
+  RoomInputItem,
+  AddBtn,
+  CloseBtn,
+} from "../../StyledComponents";
 
 function RoomCreate() {
-  const { register, handleSubmit } = useForm();
+  const { register, control, handleSubmit } = useForm({});
+  const { fields, append, remove } = useFieldArray({
+    name: "report_content",
+    control,
+  });
+
   const navigate = useNavigate();
-  const [tags, setTags] = useState([{ id: "default", text: "default" }]);
   const [id, setId] = useState<null | string>(null);
   const { mutate } = useMutation(createRoom, {
-    onSuccess: (data: any) => {
-      console.log(data);
-      navigate("/rooms");
+    onSuccess: () => {
+      navigate("/reports");
     },
     onError: (error: any) => {
       console.log(error);
     },
   });
-  const suggestions = RoomTags().map((tag: any) => {
-    return {
-      id: tag,
-      text: tag,
-    };
-  });
   const onSubmit = (data: any) => {
-    console.log("Action!");
-    const room_tag = [];
-
-    for (let i = 0; i < tags.length; i++) {
-      room_tag.push({ name: tags[i].text });
-    }
-    const formData: IRoomForm = {
+    data["rater"] = data["rater"].map((r: string) => Number(r));
+    const formData: IReportForm = {
       ...data,
-      room_tag,
     };
     mutate(formData);
-  };
-  const handleDelete = (i: number) => {
-    setTags(tags.filter((_, index: number) => index !== i));
-  };
-  const handleAddition = (tag: Tag) => {
-    setTags([...tags, tag]);
   };
   return (
     <div>
       <RoomForm onSubmit={handleSubmit(onSubmit)}>
         <RoomInputItem>
-          <RoomInput type="text" placeholder="방 이름" {...register("name")} />
-        </RoomInputItem>
-        <RoomInputItem>
-          <RoomInput type="text" placeholder="주소" {...register("address")} />
-        </RoomInputItem>
-        <RoomInputItem>
-          <RoomInput type="number" placeholder="가격" {...register("price")} />
+          <RoomInput type="text" placeholder="title" {...register("title")} />
         </RoomInputItem>
         <RoomInputItem>
           <RoomInput
-            type="number"
-            placeholder="침대 개수"
-            {...register("beds")}
+            type="text"
+            placeholder="department"
+            {...register("department")}
           />
         </RoomInputItem>
         <RoomInputItem>
-          <RoomInput placeholder="위도" type="number" {...register("lat")} />
+          <RoomInput type="text" placeholder="place" {...register("place")} />
         </RoomInputItem>
         <RoomInputItem>
-          <RoomInput placeholder="경도" type="number" {...register("lng")} />
+          <RoomInput type="checkbox" {...register("is_equipment")} />
         </RoomInputItem>
         <RoomInputItem>
-          <RoomInput
-            placeholder="주방 수"
-            type="number"
-            {...register("bedrooms")}
-          />
+          <RoomInput type="checkbox" {...register("is_amount")} />
         </RoomInputItem>
         <RoomInputItem>
-          <RoomInput
-            placeholder="화장실 수"
-            type="number"
-            {...register("bathrooms")}
-          />
+          <RoomInput type="checkbox" {...register("is_speed")} />
         </RoomInputItem>
         <RoomInputItem>
-          <RoomInput type="checkbox" {...register("instant_book")} />
+          <RoomInput type="checkbox" {...register("is_change")} />
+        </RoomInputItem>
+        <RoomInputItem>
+          <RaterWrap {...register("rater")} multiple>
+            <RaterOption value={1}>김성민</RaterOption>
+            <RaterOption value={2}>문경민</RaterOption>
+            <RaterOption value={3}>fucckk</RaterOption>
+          </RaterWrap>
         </RoomInputItem>
         <Box onClick={() => setId("1")} key={"1"} layoutId={"1"} />
         {id ? (
@@ -166,31 +85,85 @@ function RoomCreate() {
             exit="exit"
           >
             <Box layoutId={id} style={{ width: 800, height: 900 }}>
-              <RoomInputItem>
-                <RoomSubtitle>Modal Input</RoomSubtitle>
-                <RoomInput
-                  type="text"
-                  placeholder="모달"
-                  {...register("modal")}
-                />
-                <RoomInput
-                  type="text"
-                  placeholder="모달2"
-                  {...register("modal2")}
-                />
-              </RoomInputItem>
+              {fields.map((field, index) => {
+                return (
+                  <div key={field.id}>
+                    <section className={"section"} key={field.id}>
+                      <RoomInput
+                        placeholder="work"
+                        type="text"
+                        {...register(`report_content.${index}.work` as const, {
+                          required: true,
+                        })}
+                      />
+                      <RoomInput
+                        placeholder="content"
+                        type="text"
+                        {...register(
+                          `report_content.${index}.content` as const,
+                          {
+                            required: true,
+                          }
+                        )}
+                      />
+                      <RoomInput
+                        placeholder="overload"
+                        type="number"
+                        inputSize="50"
+                        {...register(
+                          `report_content.${index}.overload` as const,
+                          {
+                            required: true,
+                            valueAsNumber: true,
+                          }
+                        )}
+                      />
+                      <RoomInput
+                        placeholder="frequency"
+                        type="number"
+                        inputSize="50"
+                        {...register(
+                          `report_content.${index}.frequency` as const,
+                          {
+                            required: true,
+                            valueAsNumber: true,
+                          }
+                        )}
+                      />
+                      <button type="button" onClick={() => remove(index)}>
+                        DELETE
+                      </button>
+                    </section>
+                  </div>
+                );
+              })}
+              <AddBtn
+                onClick={() =>
+                  append({
+                    name: "",
+                    content: "",
+                    overload: 0,
+                    frequency: 0,
+                    no1: false,
+                    no2: false,
+                    no3: false,
+                    no4: false,
+                    no5: false,
+                    no6: false,
+                    no7: false,
+                    no8: false,
+                    no9: false,
+                    no10: false,
+                    no11: false,
+                  })
+                }
+              >
+                추가
+              </AddBtn>
               <CloseBtn onClick={() => setId(null)}>저장</CloseBtn>
             </Box>
           </Overlay>
         ) : null}
-        <ReactTags
-          tags={tags}
-          suggestions={suggestions}
-          handleDelete={handleDelete}
-          handleAddition={handleAddition}
-          inputFieldPosition="top"
-          autocomplete
-        />
         <button>Add</button>
       </RoomForm>
     </div>
