@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { createRoom } from "../../api/api";
 import { IReportForm } from "../../api/types";
 import {
-  Box,
   overlay,
   Overlay,
   RaterOption,
@@ -15,6 +14,11 @@ import {
   RoomInputItem,
   AddBtn,
   CloseBtn,
+  RoomTextarea,
+  ModalBox,
+  Box,
+  ModalInputWrap,
+  ModalInputSubtitle,
 } from "../../StyledComponents";
 
 function RoomCreate() {
@@ -76,7 +80,7 @@ function RoomCreate() {
             <RaterOption value={3}>fucckk</RaterOption>
           </RaterWrap>
         </RoomInputItem>
-        <Box onClick={() => setId("1")} key={"1"} layoutId={"1"} />
+        <ModalBox onClick={() => setId("1")} key={"1"} layoutId={"1"} />
         {id ? (
           <Overlay
             variants={overlay}
@@ -84,59 +88,84 @@ function RoomCreate() {
             animate="visible"
             exit="exit"
           >
-            <Box layoutId={id} style={{ width: 800, height: 900 }}>
+            <ModalBox layoutId={id} style={{ width: 1200, height: 900 }}>
               {fields.map((field, index) => {
                 return (
-                  <div key={field.id}>
-                    <section className={"section"} key={field.id}>
-                      <RoomInput
-                        placeholder="work"
-                        type="text"
-                        {...register(`report_content.${index}.work` as const, {
-                          required: true,
-                        })}
-                      />
-                      <RoomInput
-                        placeholder="content"
-                        type="text"
-                        {...register(
-                          `report_content.${index}.content` as const,
-                          {
-                            required: true,
-                          }
-                        )}
-                      />
-                      <RoomInput
-                        placeholder="overload"
-                        type="number"
-                        inputSize="50"
-                        {...register(
-                          `report_content.${index}.overload` as const,
-                          {
-                            required: true,
-                            valueAsNumber: true,
-                          }
-                        )}
-                      />
-                      <RoomInput
-                        placeholder="frequency"
-                        type="number"
-                        inputSize="50"
-                        {...register(
-                          `report_content.${index}.frequency` as const,
-                          {
-                            required: true,
-                            valueAsNumber: true,
-                          }
-                        )}
-                      />
-                      <button type="button" onClick={() => remove(index)}>
-                        DELETE
-                      </button>
-                    </section>
-                  </div>
+                  <Box>
+                    <div style={{ width: "20%" }}>
+                      <ModalInputSubtitle htmlFor={index + "work"}>
+                        Work
+                      </ModalInputSubtitle>
+                      <ModalInputSubtitle htmlFor={index + "content"}>
+                        Context
+                      </ModalInputSubtitle>
+                      <ModalInputSubtitle htmlFor={index + "content"}>
+                        Context
+                      </ModalInputSubtitle>
+                    </div>
+                    <div key={field.id} style={{ width: "80%" }}>
+                      <section className={"section"} key={field.id}>
+                        <ModalInputWrap>
+                          <RoomInput
+                            id={index + "work"}
+                            placeholder="work"
+                            type="text"
+                            {...register(
+                              `report_content.${index}.work` as const,
+                              {
+                                required: true,
+                              }
+                            )}
+                          />
+                        </ModalInputWrap>
+                        <ModalInputWrap>
+                          <RoomTextarea
+                            id={index + "content"}
+                            placeholder="content"
+                            {...register(
+                              `report_content.${index}.content` as const,
+                              {
+                                required: true,
+                              }
+                            )}
+                          />
+                        </ModalInputWrap>
+                        <ModalInputWrap>
+                          <RoomInput
+                            id={index + "overload"}
+                            placeholder="overload"
+                            type="number"
+                            inputSize="50"
+                            {...register(
+                              `report_content.${index}.overload` as const,
+                              {
+                                required: true,
+                                valueAsNumber: true,
+                              }
+                            )}
+                          />
+                        </ModalInputWrap>
+                        <RoomInput
+                          placeholder="frequency"
+                          type="number"
+                          inputSize="50"
+                          {...register(
+                            `report_content.${index}.frequency` as const,
+                            {
+                              required: true,
+                              valueAsNumber: true,
+                            }
+                          )}
+                        />
+                        <button type="button" onClick={() => remove(index)}>
+                          DELETE
+                        </button>
+                      </section>
+                    </div>
+                  </Box>
                 );
               })}
+
               <AddBtn
                 onClick={() =>
                   append({
@@ -161,7 +190,7 @@ function RoomCreate() {
                 추가
               </AddBtn>
               <CloseBtn onClick={() => setId(null)}>저장</CloseBtn>
-            </Box>
+            </ModalBox>
           </Overlay>
         ) : null}
         <button>Add</button>

@@ -1,6 +1,20 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
+// Test Com
+
+export const Box = styled.div`
+  display: flex;
+`;
+export const ModalInputWrap = styled.div`
+  height: 120px;
+`;
+export const ModalInputSubtitle = styled.label`
+  display: block;
+  font-size: 18px;
+  height: 120px;
+`;
+
 // Report List ==================================================================
 
 export const Container = styled.div`
@@ -47,9 +61,22 @@ export const RoomInput = styled.input<{ inputSize?: string }>`
   padding: 2px 13px;
   outline: none !important;
 `;
+
+export const RoomTextarea = styled.textarea`
+  width: 100%;
+  height: 55px;
+  border: none !important;
+  outline: none !important;
+  border-radius: 20px;
+  background-color: #f6f6f6;
+  padding: 15px 20px;
+  outline: none !important;
+  resize: none;
+`;
+
 export const RaterWrap = styled.select``;
 export const RaterOption = styled.option``;
-export const Box = styled(motion.div)`
+export const ModalBox = styled(motion.div)`
   background-color: rgb(254, 254, 254);
   border-radius: 30px;
   height: 50px;
@@ -68,12 +95,6 @@ export const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-  div div:first-child {
-    margin-top: 0;
-  }
-  div div {
-    margin-top: 35px;
-  }
 
   div div input:first-child {
     margin-left: 0px;
