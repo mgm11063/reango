@@ -4,15 +4,51 @@ import { motion } from "framer-motion";
 // Test Com
 
 export const Box = styled.div`
+  padding-bottom: 30px;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #ddd;
+`;
+
+export const ModalFlexBox = styled.div`
   display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 20px;
+  h6:before {
+    position: absolute;
+  }
+  button {
+  }
 `;
-export const ModalInputWrap = styled.div`
-  height: 120px;
+
+export const ModalGridBox = styled.div`
+  display: grid;
+  margin-top: 20px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 `;
+
+export const ModalInputWrap = styled.div``;
+
+export const ModalInputSwitch = styled.input``;
+export const ModalInputSwitchLabel = styled.label``;
+export const ModalInputSwitchLabelSpan = styled.span``;
+
+export const ModalInputMaintitle = styled.h6`
+  display: block;
+  font-size: 23px;
+  font-weight: 600;
+`;
+
+export const ModalInputText = styled.p`
+  display: block;
+  font-size: 15px;
+  margin-bottom: 10px;
+`;
+
 export const ModalInputSubtitle = styled.label`
   display: block;
-  font-size: 18px;
-  height: 120px;
+  font-size: 15px;
+  margin-bottom: 10px;
 `;
 
 // Report List ==================================================================
@@ -56,15 +92,15 @@ export const RoomInputItem = styled.div`
 `;
 export const RoomInput = styled.input<{ inputSize?: string }>`
   width: ${(props) => props.inputSize + "px" || "200px"};
-  height: 25px;
+  height: 33px;
   border: 1px solid #ddd;
-  padding: 2px 13px;
+  padding: 4px 23px;
   outline: none !important;
 `;
 
 export const RoomTextarea = styled.textarea`
   width: 100%;
-  height: 55px;
+  height: 120px;
   border: none !important;
   outline: none !important;
   border-radius: 20px;
@@ -72,6 +108,9 @@ export const RoomTextarea = styled.textarea`
   padding: 15px 20px;
   outline: none !important;
   resize: none;
+  margin-top: 20px;
+
+  box-sizing: border-box;
 `;
 
 export const RaterWrap = styled.select``;
@@ -82,7 +121,7 @@ export const ModalBox = styled(motion.div)`
   height: 50px;
   width: 50px;
   position: relative;
-  padding: 25px 30px;
+  padding: 55px 70px;
   border: 1px solid #ddd;
 `;
 export const Overlay = styled(motion.div)`
@@ -95,13 +134,6 @@ export const Overlay = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  div div input:first-child {
-    margin-left: 0px;
-  }
-  div div input {
-    margin-left: 10px;
-  }
 `;
 export const CloseBtn = styled.p`
   display: inline-block;
@@ -130,9 +162,9 @@ export const AddBtn = styled.p`
   }
 `;
 export const overlay = {
-  hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
-  visible: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
-  exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
+  hidden: { backgroundColor: "rgba(229, 233, 239, 0)" },
+  visible: { backgroundColor: "rgba(229, 233, 239, 1)" },
+  exit: { backgroundColor: "rgba(229, 233, 239, 0)" },
 };
 
 // Report Detail ==================================================================

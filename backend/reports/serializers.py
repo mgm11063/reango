@@ -3,6 +3,8 @@ from .models import Rater, Report, ReportContent
 
 
 class RoomContentSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(max_length=None, allow_empty_file=True, allow_null=True, required=False)
+    
     class Meta:
         model = ReportContent
         exclude = ("id", "modified", "created", "report")

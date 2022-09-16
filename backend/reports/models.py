@@ -56,6 +56,11 @@ class ReportContent(CoreModel):
     content = models.TextField(max_length=300)
     overload = models.IntegerField("작업부화")
     frequency = models.IntegerField("작업빈도")
+    image = models.ImageField(
+        upload_to="report_photos",
+        verbose_name="사진",
+        blank=True,
+    )
     no1 = models.BooleanField(default=False)
     no2 = models.BooleanField(default=False)
     no3 = models.BooleanField(default=False)
